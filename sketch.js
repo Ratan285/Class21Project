@@ -1,7 +1,6 @@
-
 var music;
 var greenBox,blueBox,yellowBox,redBox,ball;
-var y;
+var edges;
 
 function preload(){
     music = loadSound("music.mp3");
@@ -12,19 +11,19 @@ function setup(){
   createCanvas(800,600);
 
   greenBox=createSprite(100,580,180,20);
-  greenBox.shapeColour="green";
+  greenBox.shapeColor="green";
 
   blueBox=createSprite(300,580,180,20);
-  blueBox.shapeColour="blue";
+  blueBox.shapeColor="blue";
 
   yellowBox=createSprite(500,580,180,20);
-  yellowBox.shapeColour = "yellow"
+  yellowBox.shapeColor = "yellow"
 
   redBox=createSprite(700,580,180,20);
-  redBox.shapeColour= "red";
+  redBox.shapeColor= "red";
 
   ball = createSprite(random(20,750),40,20,20);
-  ball.shapeColour="white";
+  ball.shapeColor="white";
   ball.velocityX=(random(-2,7));
   ball.velocityY=5;
   
@@ -40,17 +39,27 @@ function setup(){
 
 function draw() {
     background(rgb(169,169,169));
-    createEdgeSprites();
+    edges = createEdgeSprites();
 
-    ball.bounceOff(blueBox);
+    if(ball.isTouching(blueBox)&& ball.bounceOff(blueBox)){
+        ball.shapeColor="blue";
+    }
+    if(ball.isTouching(redBox)&& ball.bounceOff(redBox)){
+        ball.shapeColor="red";
+    }
+    if(ball.isTouching(yellowBox)&& ball.bounceOff(yellowBox)){
+        ball.shapeColor="yellow";
+    }
+    if(ball.isTouching(greenBox)&& ball.bounceOff(greenBox)){
+        ball.shapeColor="green";
+    }
+
+    /*ball.bounceOff(blueBox);
     ball.bounceOff(yellowBox);
     ball.bounceOff(redBox);
-    ball.bounceOff(greenBox);
-
+    ball.bounceOff(greenBox);*/
+    ball.bounceOff(edges);
     
-
-
-
     //add condition to check if box touching surface and make it box
     
     drawSprites();
